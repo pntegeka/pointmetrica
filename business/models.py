@@ -26,6 +26,7 @@ class Business(models.Model):
     accounts_currency = models.CharField(
         max_length=255, default='UGX'
     )
+    is_suspended = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     last_updated = models.DateTimeField(null=True, blank=True)
     business_logo = models.ImageField(upload_to='business_logo/', null=True, blank=True)

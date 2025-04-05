@@ -1,0 +1,261 @@
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+
+        <meta charset="utf-8" />
+        {% if request.user.first_name %}
+            <title>
+                Solmetrica -
+                {{ request.user.first_name|title|default_if_none:" " }}
+                {{ request.user.middle_name|title|default_if_none:" " }}
+                {{ request.user.last_name|title|default_if_none:" " }}
+            </title>
+        {% else %}
+            <title>Solmetrica - {{ request.user.phone_number }}</title>
+        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}">
+         <!-- App css -->
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body id="body" class="dark-sidebar">
+        <!-- leftbar-tab-menu -->
+        <div class="left-sidebar">
+            <!-- LOGO -->
+            <div class="brand">
+                <div  class="logo">
+                    <span>
+                        <img src="{% static 'assets/images/logo-sm.png' %}" alt="logo-small" class="py-1"  style="width: 35px; height: 45px;">
+                    </span>
+                     <span class="logo-lg logo-light fs-5 text-white">
+                         Solmetrica
+                    </span>
+                </div>
+            </div>
+            <!--end logo-->
+            <div class="menu-content h-100" data-simplebar>
+                <div class="menu-body navbar-vertical tab-content">
+                    <div class="collapse navbar-collapse" id="sidebarCollapse">
+                        <!-- Navigation -->
+                        <ul class="navbar-nav">
+
+                            <li class="nav-item">
+                                <a class="nav-link collapsed" href="#institutions" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarElements">
+                                    <i class="ti ti-building-arch menu-icon"></i>
+                                    <span>
+                                        Business
+                                    </span>
+                                </a>
+                                <div class="collapse " id="institutions">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'system_admin_business_list' %}">Active</a>
+                                        </li><!--end nav-item-->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Inactive</a>
+                                        </li><!--end nav-item-->
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Suspended</a>
+                                        </li><!--end nav-item-->
+                                    </ul><!--end nav-->
+                                </div><!--end sidebarElements-->
+                            </li>
+
+                        </ul><!--end navbar-nav--->
+                    </div><!--end sidebarCollapse-->
+                </div>
+            </div>
+        </div>
+        <!-- end leftbar-tab-menu-->
+
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- Navbar -->
+            <nav class="navbar-custom" id="navbar-custom">
+                <ul class="list-unstyled topbar-nav float-end mb-0">
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle nav-user" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="false" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                {% if request.user.user_profile_image %}
+                                    <img src="{{ user.user_profile_image.url }}" alt="profile-user" class="rounded-circle me-2 thumb-sm">
+                                    {% else %}
+                                    <img src="{% static 'assets/images/users/user-4.jpg' %}" alt="profile-user" class="rounded-circle me-2 thumb-sm" />
+                                {% endif %}
+                                <div>
+                                    <span class="d-none d-md-block fw-semibold font-12">
+                                        {% if request.user.first_name %}
+                                            {{ request.user.first_name|title|default_if_none:"" }}
+                                            {% if request.user.middle_name and request.user.last_name %}
+                                                {{ request.user.last_name|title }}
+                                            {% else %}
+                                                {{ request.user.middle_name|title }}
+                                            {% endif %}
+                                        {% else %}
+                                            {{ request.user.phone_number }}
+                                        {% endif %}
+                                        <i class="mdi mdi-chevron-down"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="{% url 'user_details' %}"><i class="ti ti-user font-16 me-1 align-text-bottom"></i> Profile</a>                            <a class="dropdown-item" href="{% url 'kagi:two-factor-settings' %}">
+                                <i class="ti ti-lock font-16 me-1 align-text-bottom">
+                                </i>
+                                Account Security
+                            </a>
+                            <div class="dropdown-divider mb-0"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}"><i class="ti ti-power font-16 me-1 align-text-bottom"></i> Logout</a>
+                        </div>
+                    </li><!--end topbar-profile-->
+                </ul><!--end topbar-nav-->
+
+                <ul class="list-unstyled topbar-nav mb-0">
+                    <li>
+                        <button class="nav-link button-menu-mobile nav-icon" id="togglemenu">
+                            <i class="ti ti-menu-2"></i>
+                        </button>
+                    </li>
+                    {% block search_form %}
+                    {% endblock %}
+                </ul>
+            </nav>
+            <!-- end navbar-->
+        </div>
+        <!-- Top Bar End -->
+
+        <div class="page-wrapper">
+            <div class="page-content-tab">
+
+                <div class="container-fluid">
+                    <!-- Page-Title -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title">
+                                    User Details
+                                </h4>
+                            </div><!--end page-title-box-->
+                        </div><!--end col-->
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="float-start">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'system_admin_business_list' %}">
+                                        Business List
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="{% url 'kagi:two-factor-settings' %}">
+                                        Account Security
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                     Authenticator Devices
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container-fluid">
+
+                    <a href="{% url 'kagi:add-totp' %}">
+                        <button type="button" class="btn btn-primary float-start btn-sm">
+                            Add Authenticator Device
+                        </button>
+                    </a>
+
+                    <br>
+                    <br>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                              {{ message }}
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if object_list %}
+
+                        <div class="table-responsive">
+                            <table class="table align-text-top align-top">
+                                <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col"><b>Device added on</b></th>
+                                            <th scope="col"><b>Last used on</b></th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        {% for device in object_list %}
+                                            <tr>
+                                                <td>{{ device.created_at }}</td>
+                                                {% trans 'Never' as never %}
+                                                <td>{{ device.last_used_at|default:never}}</td>
+                                                <td>
+                                                    <form method="post" style="text-align: left !important;">
+                                                        {% csrf_token %}
+                                                        <input name="device_id" type="hidden" value="{{ device.pk }}" style="padding: 0;">
+                                                        <input type="submit" class="text-danger" name="delete" value="Remove device" style="border: none; background-color: transparent; padding: 0;">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    {% else %}
+                        <p class="mb-0">No authenticator devices have been added to this user account.</p>
+                    {% endif %}
+
+                    <!-- end page title end breadcrumb -->
+                </div><!-- container -->
+
+
+                <!-- Footer Start -->
+                <footer class="footer text-center text-sm-start">
+                    <a href="https://www.graph25.com/" target="_blank">
+                    &copy; {% now "Y" %} | Graph25 Informatics Limited
+                    </a>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+        </div>
+
+
+        <!-- end page-wrapper -->
+
+        <!-- Javascript  -->
+        <!-- vendor js -->
+        <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+        <script src="{% static 'assets/libs/feather-icons/feather.min.js' %}"></script>
+        <!-- App js -->
+        <script src="{% static 'assets/js/app.js' %}"></script>
+    </body>
+    <!--end body-->
+</html>
+
+
+
