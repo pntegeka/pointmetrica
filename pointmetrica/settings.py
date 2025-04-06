@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     'kagi',
     "widget_tweaks",
-    "bootstrap_datepicker_plus",
+    "django_flatpickr",
+    # "bootstrap_datepicker_plus",
     "crispy_forms",
     "rest_framework",
     # App Specific
@@ -142,3 +143,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = "authentication_processor"
 
 LOGIN_URL = "kagi:login"
+
+

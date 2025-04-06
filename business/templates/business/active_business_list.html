@@ -8,7 +8,7 @@
 
 {% block search_form %}
     <li>
-        <form role="search" action="{% url 'system_admin_business_list' %}" method="get" >
+        <form role="search" action="{% url 'system_admin_active_business_list' %}" method="get" >
             <label>
                 <input name="search_query" class="border-0 pt-3" placeholder="Search {{ institution.study_session_term|title }}..." value="{% if search_term %}{{ search_term }}{% else %}{% endif %}">
             </label>
@@ -16,7 +16,7 @@
     </li>
     {% if search_term %}
         <li>
-            <a href="{% url 'system_admin_business_list' %}"> &nbsp; &nbsp; clear search</a>
+            <a href="{% url 'system_admin_active_business_list' %}"> &nbsp; &nbsp; clear search</a>
         </li>
     {% endif %}
 {% endblock %}
@@ -43,7 +43,7 @@
                 <div class="float-start">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{% url 'system_admin_business_list' %}">
+                            <a href="{% url 'system_admin_active_business_list' %}">
                                 Business List
                             </a>
                          </li>
@@ -54,7 +54,7 @@
 
         <div class="container-fluid">
             <div class="row">
-                <a href="#">
+                <a href="{% url 'system_admin_create_business' %}">
                     <button type="button" class="btn btn-primary float-start btn-sm">
                         Create Business
                     </button>
@@ -92,7 +92,7 @@
                                                 <i class="las la-ellipsis-v font-20 text-muted"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel11" style="">
-                                                <a class="dropdown-item" href="{% url 'system_admin_business_particulars' business.id %}">Business Particulars</a>
+                                                <a class="dropdown-item" href="#">Business Particulars</a>
                                             </div>
                                         </div>
                                     </td>
@@ -216,7 +216,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <h5 class="my-3">
-                            There are no businesses with the searched particulars.
+                            There are no active businesses with the searched particulars.
                         </h5>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <h5 class="my-3">
-                             There are no businesses recorded in the system.
+                             There are no active businesses recorded in the system.
                         </h5>
                     </div>
                 </div>

@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page_title %}
+    Business List
+{% endblock page_title %}
+
+{% block search_form %}
+    <li>
+        <form role="search" action="{% url 'system_admin_inactive_business_list' %}" method="get" >
+            <label>
+                <input name="search_query" class="border-0 pt-3" placeholder="Search {{ institution.study_session_term|title }}..." value="{% if search_term %}{{ search_term }}{% else %}{% endif %}">
+            </label>
+        </form>
+    </li>
+    {% if search_term %}
+        <li>
+            <a href="{% url 'system_admin_inactive_business_list' %}"> &nbsp; &nbsp; clear search</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block page_content %}
+<div class="page-wrapper">
+    <div class="page-content-tab">
+
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">
+                            Business List
+                        </h4>
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="float-start">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'system_admin_active_business_list' %}">
+                                Business List
+                            </a>
+                         </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <a href="#">
+                    <button type="button" class="btn btn-primary float-start btn-sm">
+                        Create Business
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        {% if businesses %}
+            <div class="container-fluid mt-3">
+                <div class="table">
+                    <table class="table align-text-top align-top fs-6">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"><b>Name</b></th>
+                                <th scope="col"><b>Address</b></th>
+                                <th scope="col"><b>Primary Phone Number</b></th>
+                                <th scope="col"><b>Primary Email Address</b></th>
+                                <th scope="col"><b>Actions</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for business in businesses %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'system_admin_business_detail' business.id %}">
+                                            {{business.name|truncatechars:25}}
+                                        </a>
+                                    </td>
+                                    <td>{{business.address|truncatechars:25}}</td>
+                                    <td>{{business.primary_phone_contact}}</td>
+                                    <td>{{business.primary_email_contact}}</td>
+                                    <td class="text-left">
+                                        <div class="dropdown d-inline-block">
+                                            <a class="dropdown-toggle arrow-none" id="dLabel11" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                <i class="las la-ellipsis-v font-20 text-muted"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel11" style="">
+                                                <a class="dropdown-item" href="{% url 'system_admin_business_particulars' business.id %}">Business Particulars</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% if search_term %}
+                        {% if is_paginated %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <nav aria-label="..." class="float-end mb-4">
+                                        <ul class="pagination pagination-sm mb-0">
+                                            {% if page_obj.has_previous %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?search_query={{search_term}}&page=1" tabindex="-1">First</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?search_query={{search_term}}&page={{page_obj.previous_page_number}}" tabindex="-1">&laquo;</a>
+                                                </li>
+                                            {% endif %}
+
+                                            {% if page_obj.number|add:'-4' > 1 %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?search_query={{search_term}}&page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                                                </li>
+                                            {% endif %}
+
+                                            {% for i in page_range|default_if_none:page_obj.paginator.get_elided_page_range %}
+                                                {% if page_obj.number == i %}
+                                                    <li class="active page-item"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span>
+                                                    </li>
+                                                {% else %}
+                                                    {% if i == page_obj.paginator.ELLIPSIS %}
+                                                        <li class="page-item"><span class="page-link">{{ i }}</span></li>
+                                                    {% else %}
+                                                        <li class="page-item"><a class="page-link" href="?search_query={{search_term}}&page={{ i }}">{{ i }}</a></li>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?search_query={{search_term}}&page={{ page_obj.number|add:'5' }}">&hellip;</a>
+                                                </li>
+                                            {% endif %}
+
+                                            {% if page_obj.has_next %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?search_query={{search_term}}&page={{ page_obj.next_page_number }}">&raquo;</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?search_query={{search_term}}&page={{ page_obj.paginator.num_pages }}">Last</a>
+                                                </li>
+                                            {% endif %}
+                                        </ul><!--end pagination-->
+                                    </nav><!--end nav-->
+                                </div><!--end col-->
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        {% if is_paginated %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <nav aria-label="..." class="float-end mb-4">
+                                        <ul class="pagination pagination-sm mb-0">
+                                            {% if page_obj.has_previous %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page=1" tabindex="-1">First</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1">&laquo;</a>
+                                                </li>
+                                            {% endif %}
+
+                                            {% if page_obj.number|add:'-4' > 1 %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a>
+                                                </li>
+                                            {% endif %}
+
+                                            {% for i in page_range|default_if_none:page_obj.paginator.get_elided_page_range %}
+                                                {% if page_obj.number == i %}
+                                                    <li class="active page-item"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span>
+                                                    </li>
+                                                {% else %}
+                                                    {% if i == page_obj.paginator.ELLIPSIS %}
+                                                        <li class="page-item"><span class="page-link">{{ i }}</span></li>
+                                                    {% else %}
+                                                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a>
+                                                </li>
+                                            {% endif %}
+
+                                            {% if page_obj.has_next %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                                                </li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                                                </li>
+                                            {% endif %}
+                                        </ul><!--end pagination-->
+                                    </nav><!--end nav-->
+                                </div><!--end col-->
+                            </div>
+                        {% endif %}
+                {% endif %}
+
+            </div>
+        {% else %}
+            {% if search_term %}
+                <div class="container-fluid">
+                    <div class="row">
+                        <h5 class="my-3">
+                            There are no inactive businesses with the searched particulars.
+                        </h5>
+                    </div>
+                </div>
+            {% else %}
+                <div class="container-fluid">
+                    <div class="row">
+                        <h5 class="my-3">
+                             There are no inactive businesses recorded in the system.
+                        </h5>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!-- Footer Start -->
+        <footer class="footer text-center text-sm-start">
+            <a href="https://www.graph25.com/" target="_blank">
+            &copy; {% now "Y" %} | Graph25 Informatics Limited
+            </a>
+        </footer>
+        <!-- end Footer -->
+
+    </div>
+</div>
+
+{% endblock page_content %}
+
+
+
+
+

@@ -1,0 +1,667 @@
+{% extends 'business/business_base.html' %}
+{% load humanize %}
+
+{% load humanize %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block page_title %}
+    {{ business.name }}
+{% endblock page_title %}
+
+
+{% block page_content %}
+    <div class="page-wrapper">
+        <!-- Page Content-->
+        <div class="page-content-tab">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">{{ business.name }}</h4>
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div>
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="float-start">
+                        <ol class="breadcrumb mb-2">
+                            <li class="breadcrumb-item active">
+                                <a href="{% url 'system_admin_active_business_list' %}">
+                                    Business List
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                {{ business.name }} ({{ business.accounts_currency|upper }})
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end flex-wrap gap-2">
+                        {{ form.media }}
+                        <form method="get" action="" class="d-flex flex-wrap align-items-end gap-2">
+                            <div class="form-group mb-0">
+                                {{ form.starting_date }}
+                            </div>
+                            <div class="form-group mb-0">
+                                {{ form.ending_date }}
+                            </div>
+                            <button type="submit" class="btn btn-link text-decoration-none px-1 py-1">Filter</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="{% url 'system_admin_business_detail' business.id %}" role="tab" aria-selected="true">
+                                            Summary
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'system_admin_business_inventory' business.id %}" role="tab" aria-selected="false">
+                                            Inventory
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'system_admin_business_sales' business.id %}" role="tab" aria-selected="false">
+                                            Sales
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'system_admin_team_performance' business.id %}" role="tab" aria-selected="false">
+                                            Team Performance
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'system_admin_business_reporting' business.id %}" role="tab" aria-selected="false">
+                                            Reporting
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" role="tabpanel">
+
+                                            <div class="my-3 mx-3">
+                                                <div class="row justify-content-left">
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="card report-card">
+                                                            <div class="card-body">
+                                                                <div class="row d-flex justify-content-center">
+                                                                    <div class="col">
+                                                                        <p class="text-dark mb-1 fw-semibold">
+                                                                            Total Sales - last 14 Days
+                                                                        </p>
+                                                                        <h4 class="my-1">
+                                                                            {{ 3570000|intcomma }}
+                                                                        </h4>
+                                                                        <p class="mb-0 text-truncate text-muted">
+                                                                            <span class="text-success">
+                                                                                <i class="mdi mdi-checkbox-marked-circle-outline me-1"></i>
+                                                                            </span>
+                                                                            {{ 45000|intcomma }} Median Sale
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-auto align-self-center">
+                                                                        <div class="bg-light-alt d-flex justify-content-center align-items-center thumb-md  rounded-circle">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers align-self-center text-muted icon-sm"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!--end card-body-->
+                                                        </div><!--end card-->
+                                                    </div> <!--end col-->
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="card report-card">
+                                                            <div class="card-body">
+                                                                <div class="row d-flex justify-content-center">
+                                                                    <div class="col">
+                                                                        <p class="text-dark mb-1 fw-semibold">
+                                                                            Sale Average - last 14 Days
+                                                                        </p>
+                                                                        <h4 class="my-1">
+                                                                            {{ 570000|intcomma }}
+                                                                        </h4>
+                                                                        <p class="mb-0 text-truncate text-muted">
+                                                                            <span class="text-success">
+                                                                                <i class="mdi mdi-checkbox-marked-circle-outline me-1"></i>
+                                                                            </span>
+                                                                            Min {{ 45000|intcomma }} -  Max {{ 55000|intcomma }}
+                                                                        </p>
+                                                                    </div>
+
+                                                                    <div class="col-auto align-self-center">
+                                                                        <div class="bg-light-alt d-flex justify-content-center align-items-center thumb-md  rounded-circle">
+                                                                            <div class="bg-light-alt d-flex justify-content-center align-items-center thumb-md rounded-circle">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-zoom-out icon-dual">
+                                                                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                                                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                                                                </svg>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!--end card-body-->
+                                                        </div><!--end card-->
+                                                    </div> <!--end col-->
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="card report-card">
+                                                            <div class="card-body">
+                                                                <div class="row d-flex justify-content-center">
+                                                                    <div class="col">
+                                                                        <p class="text-dark mb-1 fw-semibold">
+                                                                            Payments - last 14 Days
+                                                                        </p>
+                                                                        <h4 class="my-1">
+                                                                            {{ 45|intcomma }}% Cashless
+                                                                        </h4>
+                                                                        <p class="mb-0 text-truncate text-muted">
+                                                                            <span class="text-success">
+                                                                                <i class="mdi mdi-checkbox-marked-circle-outline me-1"></i>
+                                                                            </span>
+                                                                            {{ 30|intcomma }}% Mtn | {{ 15|intcomma }}% Airtel
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-auto align-self-center">
+                                                                        <div class="bg-light-alt d-flex justify-content-center align-items-center thumb-md rounded-circle">
+                                                                            <div class="">
+                                                                                <!-- New Calendar SVG Icon -->
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar icon-dual">
+                                                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                                                </svg>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div><!--end card-body-->
+                                                        </div><!--end card-->
+                                                    </div> <!--end col-->
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="card report-card">
+                                                            <div class="card-body">
+                                                                <div class="row d-flex justify-content-center">
+                                                                    <div class="col">
+                                                                        <p class="text-dark mb-1 fw-semibold">
+                                                                            Staff Visits - last 14 days
+                                                                        </p>
+                                                                        <h4 class="my-1">
+                                                                            {{ 55|intcomma }}
+                                                                        </h4>
+                                                                        <p class="mb-0 text-truncate text-muted">
+                                                                            <span class="text-success">
+                                                                                <i class="mdi mdi-checkbox-marked-circle-outline me-1"></i>
+                                                                            </span>
+                                                                            3 in 10 customers
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-auto align-self-center">
+                                                                        <div class="bg-light-alt d-flex justify-content-center align-items-center thumb-md rounded-circle">
+                                                                            <div class="">
+                                                                                <!-- New Calendar SVG Icon -->
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar icon-dual">
+                                                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                                                </svg>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div><!--end card-body-->
+                                                        </div><!--end card-->
+                                                    </div> <!--end col-->
+
+                                                    <div class="col-md-12 col-lg-6">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">
+                                                                    Sales by Customer Category
+                                                                </h4>
+                                                            </div><!-- end card header -->
+                                                            <div class="card-body">
+                                                                <div id="approved_budget_distribution_treemap" class="apex-charts"
+                                                                    dir="ltr" style="min-height: 360px;">
+                                                                </div>
+                                                            </div><!--end card-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">
+                                                                    Sales Statistics
+                                                                </h4>
+                                                            </div><!-- end card header -->
+                                                            <div class="card-body">
+                                                                <ul class="list-group custom-list-group">
+                                                                    <li class="list-group-item align-items-center d-flex justify-content-between">
+                                                                        <div class="media">
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0">Mean sale amount</h6>
+                                                                                    <p class="mb-0 text-muted">
+                                                                                        {{ 45000|floatformat:2|intcomma }}
+                                                                                    </p>
+                                                                            </div><!--end media body-->
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item align-items-center d-flex justify-content-between">
+                                                                        <div class="media">
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0">Median sale amount</h6>
+                                                                                    <p class="mb-0 text-muted">
+                                                                                        {{ 35000|floatformat:2|intcomma }}
+                                                                                    </p>
+                                                                            </div><!--end media body-->
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item align-items-center d-flex justify-content-between">
+                                                                        <div class="media">
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0">Best Performing Outlet</h6>
+                                                                                    <p class="mb-0 text-muted">
+                                                                                        Kasangati - Outlet
+                                                                                    </p>
+                                                                            </div><!--end media body-->
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item align-items-center d-flex justify-content-between">
+                                                                        <div class="media">
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0">Lest Performing Outlet</h6>
+                                                                                    <p class="mb-0 text-muted">
+                                                                                        Gaba - Outlet
+                                                                                    </p>
+                                                                            </div><!--end media body-->
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item align-items-center d-flex justify-content-between">
+                                                                        <div class="media">
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0">Transaction Time</h6>
+                                                                                    <p class="mb-0 text-muted">
+                                                                                        Meantime - 10.00 am
+                                                                                    </p>
+                                                                            </div><!--end media body-->
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="list-group-item align-items-center d-flex justify-content-between">
+                                                                        <div class="media">
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0">Best Performing Day of the Week</h6>
+                                                                                    <p class="mb-0 text-muted">
+                                                                                        Saturday
+                                                                                    </p>
+                                                                            </div><!--end media body-->
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div><!--end card-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">
+                                                                   Sales By Product
+                                                                </h4>
+                                                            </div><!-- end card header -->
+                                                            <div class="card-body">
+                                                                <div id="budget_distribution" class="apex-charts"
+                                                                    dir="ltr" style="min-height: 365px;">
+                                                                </div>
+                                                            </div><!--end card-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title">
+                                                                    Location Sales Summaries - last 14 days
+                                                                </h4>
+                                                            </div><!-- end card header -->
+                                                            <div class="table-responsive m-2 pb-0">
+                                                                <table class="table fs-6">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th class="border-top-0">Name</th>
+                                                                            <th class="border-top-0">Sales Volume</th>
+                                                                            <th class="border-top-0">Median Transaction time</th>
+                                                                            <th class="border-top-0">Best Performing Week Day</th>
+                                                                        </tr><!--end tr-->
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                             <td>
+                                                                                Kasangati
+                                                                             </td>
+                                                                             <td>
+                                                                                 {{ 127000|floatformat:2|intcomma }}
+                                                                             </td>
+                                                                             <td>
+                                                                                 11.30 am
+                                                                             </td>
+                                                                             <td>
+                                                                                 Friday
+                                                                             </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                             <td>
+                                                                                Entebbe
+                                                                             </td>
+                                                                             <td>
+                                                                                 {{ 227000|floatformat:2|intcomma }}
+                                                                             </td>
+                                                                             <td>
+                                                                                 11.30 am
+                                                                             </td>
+                                                                             <td>
+                                                                                 Tuesday
+                                                                             </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                             <td>
+                                                                                Mbarara
+                                                                             </td>
+                                                                             <td>
+                                                                                 {{ 127000|floatformat:2|intcomma }}
+                                                                             </td>
+                                                                             <td>
+                                                                                 11.30 am
+                                                                             </td>
+                                                                             <td>
+                                                                                 Tuesday
+                                                                             </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                             <td>
+                                                                                Gulu
+                                                                             </td>
+                                                                             <td>
+                                                                                 {{ 127000|floatformat:2|intcomma }}
+                                                                             </td>
+                                                                             <td>
+                                                                                 11.30 am
+                                                                             </td>
+                                                                             <td>
+                                                                                 Monday
+                                                                             </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                             <td>
+                                                                                Fort Portal
+                                                                             </td>
+                                                                             <td>
+                                                                                 {{ 17000|floatformat:2|intcomma }}
+                                                                             </td>
+                                                                             <td>
+                                                                                 11.30 am
+                                                                             </td>
+                                                                             <td>
+                                                                                 Friday
+                                                                             </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                             <td>
+                                                                                Nakasongola
+                                                                             </td>
+                                                                             <td>
+                                                                                 {{ 47000|floatformat:2|intcomma }}
+                                                                             </td>
+                                                                             <td>
+                                                                                 11.30 am
+                                                                             </td>
+                                                                             <td>
+                                                                                 Friday
+                                                                             </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                             <td>
+                                                                                Nansana
+                                                                             </td>
+                                                                             <td>
+                                                                                 {{ 32000|floatformat:2|intcomma }}
+                                                                             </td>
+                                                                             <td>
+                                                                                 11.30 am
+                                                                             </td>
+                                                                             <td>
+                                                                                 Sunday
+                                                                             </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                             <td>
+                                                                                Kasese
+                                                                             </td>
+                                                                             <td>
+                                                                                 {{ 27000|floatformat:2|intcomma }}
+                                                                             </td>
+                                                                             <td>
+                                                                                 11.30 am
+                                                                             </td>
+                                                                             <td>
+                                                                                 Saturday
+                                                                             </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table> <!--end table-->
+                                                            </div><!--end /div-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+
+
+
+
+                            </div> <!--end card-body-->
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+
+            </div><!-- container -->
+
+            <!-- Footer Start -->
+            <footer class="footer text-center text-sm-start">
+                <a href="https://www.graph25.com/" target="_blank">
+                &copy; {% now "Y" %} | Graph25 Informatics Limited
+                </a>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+    <!-- end page content -->
+</div>
+
+    {% block extra_javascript %}
+
+        <!-- Fengyuan Chen's Datepicker CSS + JS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" />
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+
+
+
+        <!-- Sweet Alerts js -->
+        <script src="{% static 'assets/libs/sweetalert2/sweetalert2.min.js' %}"></script>
+        <!-- apexcharts -->
+        <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+        <script>
+            const options = {
+                series: [
+                  {
+                    name: 'Product 1',
+                    data: [
+                      {
+                        x: 'Customer Category 1',
+                        y: 10
+                      },
+                      {
+                        x: 'Customer Category 2',
+                        y: 60
+                      },
+                      {
+                        x: 'Customer Category 3',
+                        y: 41
+                      }
+                    ]
+                  },
+                  {
+                    name: 'Product 2',
+                    data: [
+                      {
+                        x: 'Customer Category 1',
+                        y: 10
+                      },
+                      {
+                        x: 'Customer Category 2',
+                        y: 20
+                      },
+                      {
+                        x: 'Customer Category 3',
+                        y: 51
+                      },
+                      {
+                        x: 'Customer Category 4',
+                        y: 30
+                      },
+                      {
+                        x: 'Customer Category 5',
+                        y: 20
+                      },
+                      {
+                        x: 'Customer Category 6',
+                        y: 30
+                      }
+                    ]
+                  },
+                  {
+                    name: 'Product 3',
+                    data: [
+                      {
+                        x: 'Customer Category 1',
+                        y: 10
+                      },
+                      {
+                        x: 'Customer Category 2',
+                        y: 60
+                      },
+                      {
+                        x: 'Customer Category 3',
+                        y: 41
+                      }
+                    ]
+                  }
+                ],
+                legend: {
+                    show: true, // Show legend
+                    position: 'bottom', // Position legend at the top
+                    horizontalAlign: 'center', // Center align
+                    offsetY: 5, // Add vertical space between legend and chart
+                },
+                chart: {
+                    height: 360,
+                    type: 'treemap',
+                    toolbar: {
+                        show: false,
+                    },
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function (val, index) {
+                            return val.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    }
+                }
+
+            };
+            const chart = new ApexCharts(document.querySelector("#approved_budget_distribution_treemap"), options);
+            chart.render();
+        </script>
+
+        <script>
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            const requisitionOptions = {
+                series: [ {{ 25| safe }},{{ 55| safe }},{{ 75| safe }},{{ 20| safe }},{{ 15| safe }} ],
+                labels: ['Product 1','Product 2','Product 3','Product 4','Product 5'],
+                legend: {
+                    show: true,
+                    position: 'bottom',
+                    horizontalAlign: 'left',
+                },
+                dataLabels: {
+                    enabled: false,
+                    formatter: function (value) {
+                        return numberWithCommas(value);  // Add thousand separators to data labels
+                    },
+                },
+                plotOptions: {
+                    pie: {
+                        expandOnClick: true,
+                        customScale: 1.0,
+                        donut: {
+                            size: '90%',
+                            labels: {
+                                show: true,
+                                total: {
+                                    show: true,
+                                    showAlways: true,
+                                    label: 'Total',
+                                    fontSize: '20px',
+                                    fontFamily: 'Helvetica, Arial, sans-serif',
+                                    fontWeight: 600,
+                                    color: '#373d3f',
+                                    formatter: function (w) {
+                                        return w.globals.seriesTotals.reduce((a, b) => {
+                                            return a + b
+                                        }, 0).toLocaleString();
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                chart: {
+                    height: 400,
+                    type: 'donut',
+                    offsetY: 0,
+                    toolbar: {
+                        show: false,
+                    }
+                },
+            };
+            const requisitionChart = new ApexCharts(document.querySelector("#budget_distribution"), requisitionOptions);
+            requisitionChart.render();
+        </script>
+
+    {% endblock extra_javascript %}
+
+{% endblock page_content %}
+
+
+
+

@@ -1,0 +1,152 @@
+{% extends 'business/business_base.html' %}
+
+{% load humanize %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block page_title %}
+    {{ business.name }}
+{% endblock page_title %}
+
+{% block page_content %}
+    <div class="page-wrapper">
+        <!-- Page Content-->
+        <div class="page-content-tab">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">{{ business.name }}</h4>
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div>
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="float-start">
+                        <ol class="breadcrumb mb-2">
+                            <li class="breadcrumb-item active">
+                                <a href="{% url 'system_admin_active_business_list' %}">
+                                    Business List
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                {{ business.name }} ({{ business.accounts_currency|upper }})
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'system_admin_business_detail' business.id %}" role="tab" aria-selected="true">
+                                            Summary
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'system_admin_business_inventory' business.id %}" role="tab" aria-selected="false">
+                                            Inventory
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'system_admin_business_sales' business.id %}" role="tab" aria-selected="false">
+                                            Sales
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'system_admin_team_performance' business.id %}" role="tab" aria-selected="false">
+                                            Team Performance
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="{% url 'system_admin_business_reporting' business.id %}" role="tab" aria-selected="false">
+                                            Reporting
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" role="tabpanel">
+
+                                        <div class="table mt-2 mx-2">
+                                                <table class="table align-text-top align-top fs-6">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col"><b>Reports</b></th>
+                                                            <th scope="col"><b></b></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                Sales & Product
+                                                            </td>
+                                                            <td class="text-left">
+                                                                <div class="dropdown d-inline-block">
+                                                                    <a class="dropdown-toggle arrow-none" id="dLabel11" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                                        <i class="las la-ellipsis-v font-20 text-muted"></i>
+                                                                    </a>
+                                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel11" style="">
+                                                                        <a class="dropdown-item" href="#">Generate</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Profit & Loss Statement
+                                                            </td>
+                                                            <td class="text-left">
+                                                                <div class="dropdown d-inline-block">
+                                                                    <a class="dropdown-toggle arrow-none" id="dLabel11" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                                        <i class="las la-ellipsis-v font-20 text-muted"></i>
+                                                                    </a>
+                                                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dLabel11" style="">
+                                                                        <a class="dropdown-item" href="#">Generate</a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div> <!--end card-body-->
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+
+            </div><!-- container -->
+
+            <!-- Footer Start -->
+            <footer class="footer text-center text-sm-start">
+                <a href="https://www.graph25.com/" target="_blank">
+                &copy; {% now "Y" %} | Graph25 Informatics Limited
+                </a>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+    <!-- end page content -->
+</div>
+
+{% endblock page_content %}
+
+
+
+

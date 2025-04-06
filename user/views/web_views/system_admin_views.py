@@ -7,7 +7,7 @@ from django.views.generic import View
 class AuthenticationProcessorView(View, LoginRequiredMixin):
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_superuser:
-            return redirect('system_admin_business_list')
+            return redirect('system_admin_active_business_list')
         else:
             return redirect('tenant_user_landing')
 

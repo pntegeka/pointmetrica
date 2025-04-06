@@ -1,0 +1,117 @@
+{% extends 'business/business_base.html' %}
+
+{% load humanize %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block page_title %}
+    {{ business.name }}
+{% endblock page_title %}
+
+{% block page_content %}
+    <div class="page-wrapper">
+        <!-- Page Content-->
+        <div class="page-content-tab">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">{{ business.name }}</h4>
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div>
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="float-start">
+                        <ol class="breadcrumb mb-2">
+                            <li class="breadcrumb-item active">
+                                <a href="{% url 'system_admin_active_business_list' %}">
+                                    Business List
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="{% url 'system_admin_business_detail' business.id %}">
+                                    {{ business.name }}
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Settings
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+                <div class="table">
+                    <table class="table align-text-top align-top fs-6">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"><b></b></th>
+                                <th scope="col"><b>Number</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a href="{% url 'system_admin_business_customer_type_settings' business.id %}">
+                                        Customer Types
+                                    </a>
+                                </td>
+                                <td>
+                                    3
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="{% url 'system_admin_business_location_settings' business.id %}">
+                                        Locations
+                                    </a>
+                                </td>
+                                <td>
+                                    3
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="{% url 'system_admin_business_product_category_settings' business.id %}">
+                                        Product Categories
+                                    </a>
+                                </td>
+                                <td>
+                                    3
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                     <a href="{% url 'system_admin_business_user_settings' business.id %}">
+                                        Users
+                                     </a>
+                                </td>
+                                <td>
+                                    3
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div><!-- container -->
+
+            <!-- Footer Start -->
+            <footer class="footer text-center text-sm-start">
+                &copy; {% now "Y" %} | Graph25 Informatics Limited
+            </footer>
+            <!-- end Footer -->
+        </div>
+    <!-- end page content -->
+</div>
+
+{% endblock page_content %}
+
+
+
+

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block page_title %}
+    Create Business
+{% endblock page_title %}
+
+{% block page_content %}
+    <div class="page-wrapper">
+        <!-- Page Content-->
+        <div class="page-content-tab">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">Create Business</h4>
+                        </div><!--end page-title-box-->
+                    </div><!--end col-->
+                </div>
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="float-start">
+                        <ol class="breadcrumb mb-2">
+                            <li class="breadcrumb-item active">
+                                <a href="{% url 'system_admin_active_business_list' %}">
+                                    Business List
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                Create Business
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+                <div class="row mt-2">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-header justify-content-between d-flex align-items-center">
+                                <h4 class="card-title">Business details</h4>
+                            </div>
+                            <!-- end card header -->
+                            <div class="card-body">
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        {% for field in form.visible_fields %}
+                                            <div class="col-md-6">
+                                            {% if field.label == "Country" %}
+                                                <div class="mb-3">
+                                                    {{ field.label_tag }}
+                                                    {{ field|add_class:'form-select' }}
+                                                    {% if field.errors %}
+                                                        <div style="width: 100%; margin-top: 0.25rem; font-size: 87.5%; color: #f34e4e;">
+                                                            {% for error in field.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% elif field.label == "Is single sex" %}
+                                                {{ field.label_tag }}
+                                                <div class="form-check form-switch">
+                                                    {{ field }}
+                                                </div>
+                                            {% elif field.label == "Accept learner accounts" %}
+                                                {{ field.label_tag }}
+                                                <div class="form-check form-switch">
+                                                    {{ field }}
+                                                </div>
+                                            {% elif field.label == "Requires learner exit pass" %}
+                                                {{ field.label_tag }}
+                                                <div class="form-check form-switch">
+                                                    {{ field }}
+                                                </div>
+                                            {% else %}
+                                                <div class="mb-3">
+                                                    {{ field.label_tag }}
+                                                    {{ field|add_class:'form-control' }}
+                                                    {% if field.errors %}
+                                                        <div style="width: 100%; margin-top: 0.25rem; font-size: 87.5%; color: #f34e4e;">
+                                                            {% for error in field.errors %}
+                                                                {{ error }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="text-center">
+                                        <input type="submit" class="btn btn-primary float-start w-25" value="Save" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- end card -->
+                    </div><!-- end col -->
+                </div><!-- end row -->
+                <!-- end page title end breadcrumb -->
+
+            </div><!-- container -->
+
+            <!-- Footer Start -->
+            <footer class="footer text-center text-sm-start">
+                <a href="https://www.graph25.com/" target="_blank">
+                &copy; {% now "Y" %} | Graph25 Informatics Limited
+                </a>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+    <!-- end page content -->
+</div>
+
+{% endblock page_content %}
+
+
+
+
